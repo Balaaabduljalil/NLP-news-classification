@@ -1,12 +1,12 @@
 # NLP - News classification
 
-Train and deploy a news classifier based ULMFit.
+Train and deploy a news classifier based on ULMFit.
 
 - Live version: https://nlp.imadelhanafi.com
 - Blog post: https://imadelhanafi.com/posts/text_classification_ulmfit/
 
 <a href="https://nlp.imadelhanafi.com">
-<img src="https://imadelhanafi.com/data/draft/nlp.png" width="500" height="300" class="center" />
+<img src="https://imadelhanafi.com/data/draft/nlp.png" width="500" height="400" class="center"/>
 </a>
 
 
@@ -18,20 +18,21 @@ To run the application, we can use the pre-build docker image available Docker h
 docker run --rm -p 8080:8080 imadelh/news
 ```
 
-The application will be available on http://0.0.0.0:8080
+The application will be available on http://0.0.0.0:8080.
+The user can run a customized Gunicorn command to specify number of workers or an HTTPS certificate.
+
 
 # Reproduce results
 
 ## LR and SVM
 
-To reproduce results reported in the blog post, we need to have install the requirements in our development environment.
+To reproduce results reported in the blog post, we need to install the requirements in our development environment.
 
 ```
 # Open requirement.txt and select torch==1.1.0 instead of the cpu version used for inference only.
-# Then install requirement
+# Then install requirements
 pip install -r requirements.txt
 ```
-
 
 After completing the installation, we can run parameters search or training of sk-learn models as follows
 
@@ -44,7 +45,7 @@ python3 params_search.py --model svc --exp_name svmsearch_all --data dataset_pro
 python3 params_search.py --model lreg --exp_name logreg_all --data dataset_processed
 ```
 
-The parameters space is defined in the file `sklearn_models/params_search.py`. The outputs of parameters search will be saved in the logs folder.
+The parameters space is defined in the file `sklearn_models/params_search.py`. The outputs will be saved in the logs folder.
 
 Training a model for a fixed set of parameters can be done using `sklearn_models/baseline.py`
 
@@ -53,13 +54,13 @@ Training a model for a fixed set of parameters can be done using `sklearn_models
 python3 baseline.py --model svc --exp_name svc_all --data dataset_processed
 ```
 
-The logs/metrics on testing will be saved in `sklearn_models/logs/` and the trained model will be saved in `sklearn_models/saved_models/`
+The logs/metrics on test dataset will be saved in `sklearn_models/logs/` and the trained model will be saved in `sklearn_models/saved_models/`.
 
 
 ## ULMFit
 
-To reproduce/train ULMFit model, the notebooks available in `ULMFIT` will be used. Same requirements are needed as explained before. We will need a GPU to train models, this can be done using Google Colab.
-To be able to run the training we need to specify the path to a folder where the data is stored.
+To reproduce/train ULMFit model, the notebooks available in `ULMFIT` will be used. Same requirements are needed as explained before. We will need a GPU to fine-tune LM models, this can be done using Google Colab.
+To be able to run the training we need to specify the path to a folder where the training data is stored.
 
 - Locally:
 
@@ -71,11 +72,10 @@ PATH = "/app/analyse/"
 
 - Google Colab:
 
-Save the data in Google drive, for example `files/nlp/`
+Save the data in Google drive folder, for example `files/nlp/`
 
 ```
 # The folder 'data' is saved in Google drive in "files/nlp/"
-
 # While running the notebook from google colab, mount the drive and define PATH to data
 from google.colab import drive
 drive.mount('/content/gdrive/')
@@ -110,4 +110,4 @@ Top 3 accuracy on test dataset:
 0.9044
 ```
 
-Trained model can be downloaded from here:
+Trained model is available for download at: https://github.com/imadelh/NLP-news-classification/releases/download/v1.0/ulmfit_model
