@@ -6,7 +6,7 @@ Train and deploy a news classifier based ULMFit.
 - Blog post: https://imadelhanafi.com/posts/text_classification_ulmfit/
 
 <a href="https://nlp.imadelhanafi.com">
-<img src="https://imadelhanafi.com/data/draft/nlp.png" width="500" height="300" />
+<img src="https://imadelhanafi.com/data/draft/nlp.png" width="500" height="300" class="center" />
 </a>
 
 
