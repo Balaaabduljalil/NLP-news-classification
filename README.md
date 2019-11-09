@@ -69,7 +69,7 @@ Save data from `data/`, then specify the absolute PATH in the beginning of the n
 PATH = "/app/analyse/"
 ```
 
-- Google colab:
+- Google Colab:
 
 Save the data in Google drive, for example `files/nlp/`
 
@@ -84,9 +84,10 @@ drive.mount('/content/gdrive/')
 PATH = "/content/gdrive/My Drive/files/nlp/"
 ```
 
-`01-ulmfit_balanced_dataset.ipynb` - Train ULMfit on balanced dataset - Run on Colab
+`01-ulmfit_balanced_dataset.ipynb` "<a href=\"https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ULMFIT/01-ulmfit_balanced_dataset.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>" - Train ULMfit on balanced dataset
 
-`02_ulmfit_all_data.ipynb` - Train and save ULMFit on full dataset - Run on Colab
+
+`02_ulmfit_all_data.ipynb` "<a href=\"https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ULMFIT/01-ulmfit_balanced_dataset.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>" - Train and save ULMFit on full dataset
 
 Notebook contents:
 - data preparation
