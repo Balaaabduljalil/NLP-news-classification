@@ -15,7 +15,7 @@ Train and deploy a news classifier based on ULMFit.
 To run the application, we can use the pre-build docker image available Docker hub and simply run the following command
 
 ```
-docker run --rm -p 8080:8080 imadelh/news
+docker run --rm -p 8080:8080 imadelh/news:v1
 ```
 
 The application will be available on http://0.0.0.0:8080.
