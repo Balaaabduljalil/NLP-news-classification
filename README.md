@@ -60,7 +60,18 @@ The logs/metrics on test dataset will be saved in `sklearn_models/logs/` and the
 ## ULMFit
 
 To reproduce/train ULMFit model, the notebooks available in `ULMFIT` will be used. Same requirements are needed as explained before. We will need a GPU to fine-tune LM models, this can be done using Google Colab.
-To be able to run the training we need to specify the path to a folder where the training data is stored.
+
+- Notebook contents:
+
+  - data preparation
+  - Fine-tune ULMFit
+  - Train ULMFit classifier
+  - Predictions and evaluation
+  - Exporting the trained model
+  - Inference on CPU  
+
+
+To be able to run the training, we need to specify the path to a folder where the training data is stored.
 
 - Locally:
 
@@ -89,13 +100,8 @@ PATH = "/content/gdrive/My Drive/files/nlp/"
 
 `02_ulmfit_all_data.ipynb` <a href="https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ULMFIT/02_ulmfit_all_data.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> - Train ULMFit on full dataset
 
-Notebook contents:
-- data preparation
-- Fine-tune ULMFit
-- Train ULMFit classifier
-- Predictions and evaluation
-- Exporting the trained model
-- Inference on CPU  
+
+## Performance
 
 Performance of ULMFit on the test dataset `data/dataset_inference` (see end of `02_ulmfit_all_data.ipynb` for the definition of test dataset).
 
@@ -111,3 +117,7 @@ Top 3 accuracy on test dataset:
 ```
 
 Trained model is available for download at: https://github.com/imadelh/NLP-news-classification/releases/download/v1.0/ulmfit_model
+
+---
+
+Imad El Hanafi
