@@ -8,30 +8,28 @@ import re
 
 def preprocessing(text):
     # clean_ascii
-    results = ''.join(i for i in text if ord(i) < 128)
+    results = "".join(i for i in text if ord(i) < 128)
     return results.lower()
 
 
 class ModelPackageULMFIT:
-
     def __init__(self, weights_path, weights_name):
         # Inference on CPU for fast.ai
-        defaults.device = torch.device('cpu')
+        defaults.device = torch.device("cpu")
         # For Google Run, we only have 1CPU
         # defaults.cpus = 1
 
-        # Load model        
+        # Load model
         try:
-            #self.model = load_learner(weights_path, weights_name, num_workers=0)
+            # self.model = load_learner(weights_path, weights_name, num_workers=0)
             self.model = load_learner(weights_path, weights_name)
             self.model.model.eval()
 
         except IOError:
             print("Error Loading ULMfit Model")
-                
-        # class mapping to indices 
-        self.indice_2_class = {v: k for k, v in self.model.data.c2i.items()}
 
+        # class mapping to indices
+        self.indice_2_class = {v: k for k, v in self.model.data.c2i.items()}
 
     def topk_predictions(self, text, k):
         # Prepare input
@@ -41,11 +39,14 @@ class ModelPackageULMFIT:
         with torch.no_grad():
             predictions = self.model.predict(input_)
 
-        # Select top_k predictions and their probabilities 
+        # Select top_k predictions and their probabilities
         proba_k = predictions[2].topk(k)[0].data.numpy()
         indices_k = predictions[2].topk(k)[1].data.numpy()
 
         # dictionnary of predicted classes with their probabilities
-        results = {self.indice_2_class[i]: "{:12.2f}%".format(float(j)*100) for i, j in zip(indices_k, proba_k)}
+        results = {
+            self.indice_2_class[i]: "{:12.2f}%".format(float(j) * 100)
+            for i, j in zip(indices_k, proba_k)
+        }
 
         return results

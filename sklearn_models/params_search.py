@@ -31,14 +31,11 @@ PATH = "/content/gdrive/My Drive/ssh_files/nlp"
 
 # Params space for grid_search
 PARAMS_SPACE = {
-    'tfidf__ngram_range': [(1, 2), (1, 3)],
-    'clf__C': (0.1, 0.2, 0.3, 0.5, 1, 5),
-    }
-
-MODELS = {
-    'svc': LinearSVC,
-    'lreg': LogisticRegression
+    "tfidf__ngram_range": [(1, 2), (1, 3)],
+    "clf__C": (0.1, 0.2, 0.3, 0.5, 1, 5),
 }
+
+MODELS = {"svc": LinearSVC, "lreg": LogisticRegression}
 
 
 def get_parser(name):
@@ -51,13 +48,13 @@ def get_parser(name):
     return parser
 
 
-class ModelSearch(argparse.Namespace): # noqa
+class ModelSearch(argparse.Namespace):  # noqa
     def build_parser(self):
         parser = get_parser("Params Search")
         parser.add_argument("--model", required=True)
         parser.add_argument("--exp_name", required=True)
-        parser.add_argument("--score", default='f1')
-        parser.add_argument("--data", default='dataset_processed_balanced')
+        parser.add_argument("--score", default="f1")
+        parser.add_argument("--data", default="dataset_processed_balanced")
 
         return parser
 
@@ -66,39 +63,52 @@ class ModelSearch(argparse.Namespace): # noqa
         args = parser.parse_args()
         super().__init__(**vars(args))
 
+
 # Config
 config = ModelSearch()
 
 # Define logger
-logger = utils.get_logger(
-   "logs/search_{}.log".format(config.exp_name))
+logger = utils.get_logger("logs/search_{}.log".format(config.exp_name))
 
 
 def main():
     # Loading Dataset
     logger.info("Start Loading saved feather dataset")
-    data = pd.read_feather(f'{PATH}/data/{config.data}')
+    data = pd.read_feather(f"{PATH}/data/{config.data}")
     logger.info("Data loaded.")
 
     # TF-IDF transformer + simple algorithm
     logger.info("Define the pipeline:")
-    text_classifier = Pipeline([
-        ('tfidf', TfidfVectorizer(max_df=0.9, min_df=3, analyzer="word", sublinear_tf=True)),
-        ('clf', MODELS[config.model]()),
-    ])
-    grid_search = GridSearchCV(text_classifier, PARAMS_SPACE, scoring="%s_macro" % config.score, cv=5, n_jobs=-1)
+    text_classifier = Pipeline(
+        [
+            (
+                "tfidf",
+                TfidfVectorizer(
+                    max_df=0.9, min_df=3, analyzer="word", sublinear_tf=True
+                ),
+            ),
+            ("clf", MODELS[config.model]()),
+        ]
+    )
+    grid_search = GridSearchCV(
+        text_classifier,
+        PARAMS_SPACE,
+        scoring="%s_macro" % config.score,
+        cv=5,
+        n_jobs=-1,
+    )
 
     # Split data : training/testing
     logger.info("Training, testing split.")
     xtrain, xtest, ytrain, ytest = train_test_split(
-                data['clean_text'], data.category, random_state=42,test_size=0.1)
+        data["clean_text"], data.category, random_state=42, test_size=0.1
+    )
 
     # Train model and evaluate
     logger.info("Searching for best params...")
     grid_search.fit(xtrain, ytrain)
 
-
-    #Scoring
+    # Scoring
     logger.info("Best parameters set found on development set:")
     logger.info(grid_search.best_params_)
 
@@ -108,16 +118,14 @@ def main():
     for mean, std, params in zip(means, stds, grid_search.cv_results_["params"]):
         logger.info("%0.3f (+/-%0.03f) for %r" % (mean, std * 2, params))
 
-
-    #Testing report
+    # Testing report
     logger.info("Scores report on test dataset using best model:")
     prediction = grid_search.predict(xtest)
     logger.info(classification_report(ytest, prediction))
 
-
-    #Saving best model
-    #logger.info("Saving best model")
-    #dump(grid_search.best_estimator_, 'saved_models/search-{}.joblib'.format(config.exp_name))
+    # Saving best model
+    # logger.info("Saving best model")
+    # dump(grid_search.best_estimator_, 'saved_models/search-{}.joblib'.format(config.exp_name))
 
 
 if __name__ == "__main__":

@@ -7,48 +7,48 @@ import re
 
 def preprocessing(text):
     # clean_ascii
-    results = ''.join(i for i in text if ord(i) < 128)
+    results = "".join(i for i in text if ord(i) < 128)
     return results.lower()
 
+
 def keep_token(t):
-    return (t.is_alpha and 
-            not (t.is_space or t.is_punct or 
-                 t.is_stop or t.like_num))
+    return t.is_alpha and not (t.is_space or t.is_punct or t.is_stop or t.like_num)
+
 
 def lemmatize_doc(doc):
-    return [ t.lemma_ for t in doc if keep_token(t)]
+    return [t.lemma_ for t in doc if keep_token(t)]
 
 
 class ModelPackageSK:
-
     def __init__(self, weights_path, weights_name, spacy):
         # Load spacy NLP
         self.nlp = spacy
 
         # Load model
         try:
-            self.model = load(f'{weights_path}/{weights_name}') 
+            self.model = load(f"{weights_path}/{weights_name}")
 
         except IOError:
             print("Error Loading the Model")
 
-        # class mapping to indices 
+        # class mapping to indices
         self.classes = self.model.classes_
-
 
     def topk_predictions(self, text, k):
         # Prepare input
         input_ = preprocessing(text)
 
-        # Lemmatize 
-        clean_input = ' '.join(lemmatize_doc(self.nlp(input_)))
+        # Lemmatize
+        clean_input = " ".join(lemmatize_doc(self.nlp(input_)))
 
         # Do inference, probabilities and top_k indices
         predictions = self.model.predict_proba([clean_input])
-        best_k = np.argsort(predictions, axis=1)[:,-k:]
+        best_k = np.argsort(predictions, axis=1)[:, -k:]
 
         # dictionnary of predicted classes with their probabilities
-        results = {self.classes[i]: "{:12.2f}%".format(float(predictions[0][i])*100) for i in best_k[0][::-1]}
+        results = {
+            self.classes[i]: "{:12.2f}%".format(float(predictions[0][i]) * 100)
+            for i in best_k[0][::-1]
+        }
 
         return results
-

@@ -18,6 +18,7 @@ def get_logger(file_path):
 
     return logger
 
+
 # Top k accuracy
 def top_n_accuracy(preds, ts, n):
     """ 
@@ -25,9 +26,9 @@ def top_n_accuracy(preds, ts, n):
     preds: prediction probabilities (nb_observations, n_classes)
 
     """
-    best_n = np.argsort(preds, axis=1)[:,-n:]
+    best_n = np.argsort(preds, axis=1)[:, -n:]
     successes = 0
     for i in range(ts.shape[0]):
-        if ts[i] in best_n[i,:]:
+        if ts[i] in best_n[i, :]:
             successes += 1
-    return float(successes)/ts.shape[0]
+    return float(successes) / ts.shape[0]

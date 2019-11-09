@@ -36,8 +36,8 @@ PATH = "/content/gdrive/My Drive/ssh_files/nlp"
 # These parametrs have been found using params_search.py
 MODELS = {
     # 0.2 for balanced
-    'svc': CalibratedClassifierCV(LinearSVC(C=0.5)),
-    'lreg': LogisticRegression(C=5)
+    "svc": CalibratedClassifierCV(LinearSVC(C=0.5)),
+    "lreg": LogisticRegression(C=5),
 }
 
 
@@ -51,12 +51,12 @@ def get_parser(name):
     return parser
 
 
-class ModelConfig(argparse.Namespace): # noqa
+class ModelConfig(argparse.Namespace):  # noqa
     def build_parser(self):
         parser = get_parser("Model training")
         parser.add_argument("--model", required=True)
         parser.add_argument("--exp_name", required=True)
-        parser.add_argument("--data", default='dataset_processed_balanced')
+        parser.add_argument("--data", default="dataset_processed_balanced")
 
         return parser
 
@@ -65,60 +65,71 @@ class ModelConfig(argparse.Namespace): # noqa
         args = parser.parse_args()
         super().__init__(**vars(args))
 
+
 # Config
 config = ModelConfig()
 
 # Define logger
-logger = utils.get_logger(
-   "logs/{}.log".format(config.exp_name))
+logger = utils.get_logger("logs/{}.log".format(config.exp_name))
 
 
 def main():
     # Loading Dataset
     logger.info("Start Loading saved feather dataset")
-    data = pd.read_feather(f'{PATH}/data/{config.data}')
+    data = pd.read_feather(f"{PATH}/data/{config.data}")
     logger.info("Data loaded.")
 
     # TF-IDF transformer + simple algorithm
     # The parameteres for the model has been found using params_search.py
     logger.info("Define the pipeline:")
-    text_classifier = Pipeline([
-        ('tfidf', TfidfVectorizer(max_df=0.9, min_df=3, analyzer="word", ngram_range=(1,2), sublinear_tf=True)),
-        ('clf', MODELS[config.model]),
-    ])
+    text_classifier = Pipeline(
+        [
+            (
+                "tfidf",
+                TfidfVectorizer(
+                    max_df=0.9,
+                    min_df=3,
+                    analyzer="word",
+                    ngram_range=(1, 2),
+                    sublinear_tf=True,
+                ),
+            ),
+            ("clf", MODELS[config.model]),
+        ]
+    )
     logger.info(str(text_classifier))
 
     # Split data : training/testing
     logger.info("Training, testing split.")
     xtrain, xtest, ytrain, ytest = train_test_split(
-                data['clean_text'], data.category, random_state=42,test_size=0.1)
+        data["clean_text"], data.category, random_state=42, test_size=0.1
+    )
 
     # Train model and evaluate
     logger.info("Training the classifier...")
     text_classifier.fit(xtrain, ytrain)
 
-    #Scoring
+    # Scoring
     logger.info("Training is done. F1-score:")
     prediction = text_classifier.predict(xtest)
     prediction_proba = text_classifier.predict_proba(xtest)
-    
-    logger.info(f1_score(ytest, prediction, average='macro'))
 
-    #Testing report
+    logger.info(f1_score(ytest, prediction, average="macro"))
+
+    # Testing report
     logger.info("Scores report on test dataset:")
     logger.info(classification_report(ytest, prediction))
-    
-    # compute top_3 accuracy 
+
+    # compute top_3 accuracy
     classes = list(text_classifier.classes_)
     # do mapping to classes indices
     ts = np.array([classes.index(i) for i in list(ytest)])
     logger.info("Top 3 accuracy on test dataset:")
     logger.info(utils.top_n_accuracy(prediction_proba, ts, 3))
 
-    #Saving model
+    # Saving model
     logger.info("Saving model")
-    dump(text_classifier, 'saved_models/{}.joblib'.format(config.exp_name))
-
+    dump(text_classifier, "saved_models/{}.joblib".format(config.exp_name))
 
 
 if __name__ == "__main__":
