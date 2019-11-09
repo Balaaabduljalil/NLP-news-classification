@@ -118,6 +118,11 @@ Top 3 accuracy on test dataset:
 
 Trained model is available for download at: https://github.com/imadelh/NLP-news-classification/releases/download/v1.0/ulmfit_model
 
+This project is a very basic text classifier. Here is a list of other features that could be added
+- Feedback option to allow the user to submit a correction of the prediction.
+- Periodically fine-tune model based on new feedbacks.
+- Compare performance to other language models (BERT, XLNet, etc).
+
 ---
 
 Imad El Hanafi
