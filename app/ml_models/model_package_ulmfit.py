@@ -14,6 +14,11 @@ def preprocessing(text):
 
 class ModelPackageULMFIT:
     def __init__(self, weights_path, weights_name):
+        """
+        weights_path: path to the folder where sklearn model is saved
+        weights_name: name of the file (model)
+        """
+
         # Inference on CPU for fast.ai
         defaults.device = torch.device("cpu")
         # For Google Run, we only have 1CPU
@@ -32,6 +37,13 @@ class ModelPackageULMFIT:
         self.indice_2_class = {v: k for k, v in self.model.data.c2i.items()}
 
     def topk_predictions(self, text, k):
+        """
+        text: str, raw text input 
+        k: int, to define top-k predictions
+
+        returns a dict of k keys {classes: probability}
+        """
+        
         # Prepare input
         input_ = preprocessing(text)
 

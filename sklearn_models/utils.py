@@ -23,7 +23,7 @@ def get_logger(file_path):
 def top_n_accuracy(preds, ts, n):
     """ 
     ts: np array (nb_observations,)
-    preds: prediction probabilities (nb_observations, n_classes)
+    preds: prediction probabilities np array (nb_observations, n_classes)
 
     """
     best_n = np.argsort(preds, axis=1)[:, -n:]

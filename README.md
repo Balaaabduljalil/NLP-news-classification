@@ -95,10 +95,10 @@ drive.mount('/content/gdrive/')
 PATH = "/content/gdrive/My Drive/files/nlp/"
 ```
 
-`01_ulmfit_balanced_dataset.ipynb` <a href="https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ULMFIT/01_ulmfit_balanced_dataset.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> - Train ULMfit on balanced dataset
+`01_ulmfit_balanced_dataset.ipynb` <a href="https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ulmfit/01_ulmfit_balanced_dataset.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> - Train ULMfit on balanced dataset
 
 
-`02_ulmfit_all_data.ipynb` <a href="https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ULMFIT/02_ulmfit_all_data.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> - Train ULMFit on full dataset
+`02_ulmfit_all_data.ipynb` <a href="https://colab.research.google.com/github/imadelh/NLP-news-classification/blob/master/ulmfit/02_ulmfit_all_data.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> - Train ULMFit on full dataset
 
 
 ## Performance

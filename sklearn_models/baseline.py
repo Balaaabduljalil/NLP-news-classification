@@ -2,13 +2,11 @@
 Run : 
 
 Logistic regression: 
-
 python3 baseline.py --model lreg --exp_name logregression_balanced --data dataset_processed_balanced
 python3 baseline.py --model lreg --exp_name logregression_all --data dataset_processed
 
 
 SVC: 
-
 python3 baseline.py --model svc --exp_name svc_balanced --data dataset_processed_balanced
 python3 baseline.py --model svc --exp_name svc_all --data dataset_processed
 
@@ -33,7 +31,7 @@ from sklearn.model_selection import train_test_split
 # Absolute PATH where data folder is
 PATH = "/content/gdrive/My Drive/ssh_files/nlp"
 
-# These parametrs have been found using params_search.py
+# These params have been found using params_search.py
 MODELS = {
     # 0.2 for balanced
     "svc": CalibratedClassifierCV(LinearSVC(C=0.5)),
@@ -52,6 +50,9 @@ def get_parser(name):
 
 
 class ModelConfig(argparse.Namespace):  # noqa
+    """
+    Training configuration
+    """
     def build_parser(self):
         parser = get_parser("Model training")
         parser.add_argument("--model", required=True)
@@ -66,7 +67,7 @@ class ModelConfig(argparse.Namespace):  # noqa
         super().__init__(**vars(args))
 
 
-# Config
+# Define config
 config = ModelConfig()
 
 # Define logger
@@ -80,7 +81,7 @@ def main():
     logger.info("Data loaded.")
 
     # TF-IDF transformer + simple algorithm
-    # The parameteres for the model has been found using params_search.py
+    # The params for the model have been found using params_search.py
     logger.info("Define the pipeline:")
     text_classifier = Pipeline(
         [

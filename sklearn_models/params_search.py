@@ -49,6 +49,9 @@ def get_parser(name):
 
 
 class ModelSearch(argparse.Namespace):  # noqa
+    """
+    Model search configuration
+    """
     def build_parser(self):
         parser = get_parser("Params Search")
         parser.add_argument("--model", required=True)
@@ -64,7 +67,7 @@ class ModelSearch(argparse.Namespace):  # noqa
         super().__init__(**vars(args))
 
 
-# Config
+# Define config
 config = ModelSearch()
 
 # Define logger
@@ -90,6 +93,7 @@ def main():
             ("clf", MODELS[config.model]()),
         ]
     )
+    # Define Cross validation grid search
     grid_search = GridSearchCV(
         text_classifier,
         PARAMS_SPACE,

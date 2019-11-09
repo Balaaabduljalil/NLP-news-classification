@@ -16,11 +16,21 @@ def keep_token(t):
 
 
 def lemmatize_doc(doc):
+    """ Lemmatize a document """
     return [t.lemma_ for t in doc if keep_token(t)]
 
 
 class ModelPackageSK:
+    """
+    Model package for Sklearn model
+    """
     def __init__(self, weights_path, weights_name, spacy):
+        """
+        weights_path: path to the folder where sklearn model is saved
+        weights_name: name of the file (model)
+        spacy: a loaded spacy model 
+        """
+
         # Load spacy NLP
         self.nlp = spacy
 
@@ -35,6 +45,13 @@ class ModelPackageSK:
         self.classes = self.model.classes_
 
     def topk_predictions(self, text, k):
+        """
+        text: str, raw text input 
+        k: int, to define top-k predictions
+
+        returns a dict of k keys {classes: probability}
+        """
+        
         # Prepare input
         input_ = preprocessing(text)
 
