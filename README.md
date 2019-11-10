@@ -12,7 +12,7 @@ Train and deploy a news classifier based on ULMFit.
 
 # Running on cloud/local machine
 
-To run the application, we can use the pre-build docker image available Docker hub and simply run the following command
+To run the application, we can use the pre-build docker image available on Docker Hub and simply run the following command
 
 ```
 docker run --rm -p 8080:8080 imadelh/news:v1
@@ -26,6 +26,8 @@ The user can run a customized Gunicorn command to specify number of workers or a
 
 ## LR and SVM
 
+- Requirements
+
 To reproduce results reported in the blog post, we need to install the requirements in our development environment.
 
 ```
@@ -34,7 +36,9 @@ To reproduce results reported in the blog post, we need to install the requireme
 pip install -r requirements.txt
 ```
 
-After completing the installation, we can run parameters search or training of sk-learn models as follows
+- Hyper-parameter search
+
+After completing the installation, we can run parameters search or training of sklearn models as follows
 
 ```
 # Params search for SVM
@@ -46,6 +50,8 @@ python3 params_search.py --model lreg --exp_name logreg_all --data dataset_proce
 ```
 
 The parameters space is defined in the file `sklearn_models/params_search.py`. The outputs will be saved in the logs folder.
+
+- Training
 
 Training a model for a fixed set of parameters can be done using `sklearn_models/baseline.py`
 
@@ -59,7 +65,7 @@ The logs/metrics on test dataset will be saved in `sklearn_models/logs/` and the
 
 ## ULMFit
 
-To reproduce/train ULMFit model, the notebooks available in `ULMFIT` will be used. Same requirements are needed as explained before. We will need a GPU to fine-tune LM models, this can be done using Google Colab.
+To reproduce/train ULMFit model, the notebooks available in `ulmfit/` are used. Same requirements are needed as explained before. We will need a GPU to fine-tune LM models, this can be done using Google Colab.
 
 - Notebook contents:
 
