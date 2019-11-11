@@ -10,7 +10,6 @@ Train and deploy a news classifier based on ULMFit.
 <img src="https://imadelhanafi.com/data/draft/nlp.png" width="500" height="400" class="center"/>
 </a>
 
-
 # Running on cloud/local machine
 
 To run the application, we can use the pre-build docker image available on Docker Hub and simply run the following command
@@ -75,6 +74,9 @@ Then enter the address of the image, choose other parameters as follows and depl
 After few seconds,  you will see a link to the app. 
 
 <img src="https://imadelhanafi.com/data/draft/run3.png" width="50%" height="50%">
+
+Serverless version may suffer from [**cold-start**](https://github.com/ahmetb/cloud-run-faq#cold-starts) if the service does not receive requests for a long time. 
+
 
 # Reproduce results
 
