@@ -3,6 +3,7 @@
 Train and deploy a news classifier based on ULMFit.
 
 - Live version: https://nlp.imadelhanafi.com
+- Serverless version: https://newsclassifier-3z3eisjmpa-uc.a.run.app 
 - Blog post: https://imadelhanafi.com/posts/text_classification_ulmfit/
 
 <a href="https://nlp.imadelhanafi.com">
@@ -31,7 +32,51 @@ gunicorn --certfile '/path_to/chain.pem' --keyfile '/path_to/key.pem' --workers=
 
 # Serverless deployement - Google Run 
 
-[To add] 
+Google Run is a new service from GCP that allows serverless deployment of containers with HTTPS endpoints. The app will run on 1 CPU with 2GB memory and have the ability to scale automatically depending on the number of concurrent requests. 
+
+- Build image and push it to Container Registry 
+
+From a GCP project, we will use Google Shell to build the image and push it to GCR (container registry).
+
+```
+# Get name of project 
+# For illustration we will call it PROJECT-ID
+
+gcloud config get-value project
+```
+
+Create the following Dockerfile in your CloudShell session.
+
+```
+FROM imadelh/news:v_1cpu
+
+# Google Run uses env variable PORT 
+
+CMD gunicorn --bind :$PORT wsgi:app
+```
+
+Finally, we can build and submit the image to GCR.
+
+```
+gcloud builds submit --tag gcr.io/PROJECT-ID/news_classifier
+```
+
+- Deploy on Google Run
+
+
+From Google Run page, we will use the image `gcr.io/PROJECT-ID/news_classifier:latest` to run the app. Create a new service 
+
+![](https://imadelhanafi.com/data/draft/run.png)
+
+
+Then enter the address of the image, choose other parameters as follows and deploy 
+
+![](https://imadelhanafi.com/data/draft/run1.png)
+
+After few seconds,  you will see a link to the app. 
+
+![](https://imadelhanafi.com/data/draft/run3.png)
+ 
 
 # Reproduce results
 
