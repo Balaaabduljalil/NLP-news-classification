@@ -29,6 +29,10 @@ docker run -it --rm -v ~/nlp:/cert -p 8080:8080 imadelh/news:v1 bash
 gunicorn --certfile '/path_to/chain.pem' --keyfile '/path_to/key.pem' --workers=4 --bind 0.0.0.0:8080 wsgi:app
 ```
 
+# Serverless deployement - Google Run 
+
+[To add] 
+
 # Reproduce results
 
 ## LR and SVM
