@@ -14,13 +14,20 @@ Train and deploy a news classifier based on ULMFit.
 
 To run the application, we can use the pre-build docker image available on Docker Hub and simply run the following command
 
-```
+```bash
 docker run --rm -p 8080:8080 imadelh/news:v1
 ```
 
 The application will be available on http://0.0.0.0:8080.
 The user can run a customized Gunicorn command to specify number of workers or an HTTPS certificate.
 
+```bash
+# Get into the container
+docker run -it --rm -v ~/nlp:/cert -p 8080:8080 imadelh/news:v1 bash
+
+# Run Gunicorn with specefic number of workers/threads
+gunicorn --certfile '/path_to/chain.pem' --keyfile '/path_to/key.pem' --workers=4 --bind 0.0.0.0:8080 wsgi:app
+```
 
 # Reproduce results
 
@@ -30,7 +37,7 @@ The user can run a customized Gunicorn command to specify number of workers or a
 
 To reproduce results reported in the blog post, we need to install the requirements in our development environment.
 
-```
+```bash
 # Open requirement.txt and select torch==1.1.0 instead of the cpu version used for inference only.
 # Then install requirements
 pip install -r requirements.txt
@@ -40,7 +47,7 @@ pip install -r requirements.txt
 
 After completing the installation, we can run parameters search or training of sklearn models as follows
 
-```
+```bash
 # Params search for SVM
 cd sklearn_models
 python3 params_search.py --model svc --exp_name svmsearch_all --data dataset_processed
@@ -55,7 +62,7 @@ The parameters space is defined in the file `sklearn_models/params_search.py`. T
 
 Training a model for a fixed set of parameters can be done using `sklearn_models/baseline.py`
 
-```
+```bash
 # Specify the parameters of the model inside baseline.py and run
 python3 baseline.py --model svc --exp_name svc_all --data dataset_processed
 ```
@@ -82,7 +89,7 @@ To be able to run the training, we need to specify the path to a folder where th
 - Locally:
 
 Save data from `data/`, then specify the absolute PATH in the beginning of the notebook.
-```
+```bash
 # This is the absolute path to where folder "data" is available
 PATH = "/app/analyse/"
 ```
@@ -91,7 +98,7 @@ PATH = "/app/analyse/"
 
 Save the data in Google drive folder, for example `files/nlp/`
 
-```
+```bash
 # The folder 'data' is saved in Google drive in "files/nlp/"
 # While running the notebook from google colab, mount the drive and define PATH to data
 from google.colab import drive
@@ -111,7 +118,7 @@ PATH = "/content/gdrive/My Drive/files/nlp/"
 
 Performance of ULMFit on the test dataset `data/dataset_inference` (see end of `02_ulmfit_all_data.ipynb` for the definition of test dataset).
 
-```
+```bash
 # ULMFit - Performance on test dataset
             precision    recall  f1-score   support
 micro avg                           0.73     20086
