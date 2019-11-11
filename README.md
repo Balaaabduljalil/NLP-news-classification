@@ -66,17 +66,15 @@ gcloud builds submit --tag gcr.io/PROJECT-ID/news_classifier
 
 From Google Run page, we will use the image `gcr.io/PROJECT-ID/news_classifier:latest` to run the app. Create a new service 
 
-![](https://imadelhanafi.com/data/draft/run.png)
-
+<img src="https://imadelhanafi.com/data/draft/run.png" width="50%" height="50%">
 
 Then enter the address of the image, choose other parameters as follows and deploy 
 
-![](https://imadelhanafi.com/data/draft/run1.png)
+<img src="https://imadelhanafi.com/data/draft/run1.png" width="60%" height="60%">
 
 After few seconds,  you will see a link to the app. 
 
-![](https://imadelhanafi.com/data/draft/run3.png)
- 
+<img src="https://imadelhanafi.com/data/draft/run3.png" width="50%" height="50%">
 
 # Reproduce results
 
