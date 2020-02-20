@@ -3,7 +3,7 @@
 Train and deploy a news classifier based on ULMFit.
 
 - Live version: https://nlp.imadelhanafi.com
-- Serverless version: https://newsclassifier-3z3eisjmpa-uc.a.run.app 
+- Serverless version: https://newsclassifier-eebuzelyaa-uc.a.run.app/
 - Blog post: https://imadelhanafi.com/posts/text_classification_ulmfit/
 
 <a href="https://nlp.imadelhanafi.com">
