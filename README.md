@@ -186,4 +186,4 @@ This project is a very basic text classifier. Here is a list of other features t
 
 ---
 
-Imad El Hanafi
+Imad E
